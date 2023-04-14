@@ -13,7 +13,7 @@ public class BallsInfoProvider
 
     private void Initialize()
     {
-        var resorces = Resources.LoadAll<BallScriptableObject>("ScriptableObject").ToList();
+        var resorces = Resources.LoadAll<BallScriptableObject>(BallConfig.ScriptableObject.TypeBalls).ToList();
 
         foreach (BallScriptableObject ballScriptableObject in resorces)
         {

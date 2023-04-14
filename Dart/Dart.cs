@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class Dart : MonoBehaviour
@@ -28,8 +27,10 @@ public class Dart : MonoBehaviour
         if (collision.gameObject.TryGetComponent<Ball>(out Ball ball))
             ball.Burst();
 
+
         if (collision.gameObject.TryGetComponent<Bomb>(out Bomb bomb))
             bomb.Detonate2();
+
         transform.rotation = Quaternion.AngleAxis(-_angle, Vector3.forward);
         transform.rotation = Quaternion.AngleAxis(180, Vector3.up);
         Push();
@@ -37,7 +38,9 @@ public class Dart : MonoBehaviour
 
     private void Push()
     {
-        _rigidbody2D.AddForce(Vector2.up * _force);
+        float inaccuracy = Random.Range(0.1f, 0.2f);
+        Vector2 force = new Vector2(inaccuracy + Vector2.one.x, inaccuracy + Vector2.one.y);
+        _rigidbody2D.AddForce(force * _force);
     }
 }
 

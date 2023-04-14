@@ -16,7 +16,7 @@ public class BallFactory
 
     private void InitializeBalls()
     {
-        _ball = Resources.Load<Ball>("Ball");
+        _ball = Resources.Load<Ball>(BallConfig.BasePrefab);
 
         foreach (BallScriptableObject ballScriptableObject in _ballConfigParameter.BallScriptableObjects)
         {
