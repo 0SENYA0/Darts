@@ -1,28 +1,15 @@
 ﻿using System;
 using UnityEngine;
 
-public class Bomb : MonoBehaviour, IBomb
+public class Bomb : MonoBehaviour
 {
-    public event Action<IBomb> Detonated;
-    BombRadius _bombRadius;
-
-    private void Start() 
-    {
-        _bombRadius = transform.GetChild(0).GetComponent<BombRadius>();
-        _bombRadius.enabled = false;
-    } 
+    [SerializeField] private float _radius = 3f;
+    public event Action Detonated;
     
-    public void Detonate(float radius)
-    {
-        //Detonated?.Invoke(this);
-        //_bombRadius.enabled = true;
-        //Destroy(gameObject);
-    }
-
     public void Detonate2()
     {
-        Detonated?.Invoke(this);
-        _bombRadius.enabled = true;
+        Physics2D.CircleCast(transform.position, _radius, transform.position);
+        Detonated?.Invoke();
         Destroy(gameObject);
     }
 }

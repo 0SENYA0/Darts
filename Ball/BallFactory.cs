@@ -1,39 +1,38 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
 using UnityEngine;
 
 public class BallFactory
 {
-    private Dictionary<BallColor, Ball> _balls = new Dictionary<BallColor, Ball>();
-    private Ball _ball;
+    //private Dictionary<BallColor, Ball> _balls = new Dictionary<BallColor, Ball>();
+    //private Ball _ball;
 
-    private readonly BallsInfoProvider _ballConfigParameter;
+    //private readonly BallsLoader _ballsLoader;
 
-    public BallFactory(BallsInfoProvider ballConfigParameter)
-    {
-        _ballConfigParameter = ballConfigParameter;
-        InitializeBalls();
-    }
+    //public BallFactory(BallsLoader ballLoader)
+    //{
+    //    _ballsLoader = ballLoader;
+    //    //InitializeBalls();
+    //}
+    //private void InitializeBalls()
+    //{
+    //    //_ball = (Ball)_ballsLoader.BallPrefab;
 
-    private void InitializeBalls()
-    {
-        _ball = Resources.Load<Ball>(BallConfig.BasePrefab);
+    //    foreach (BallScriptableObject ballScriptableObject in _ballsLoader.ScriptableObjects)
+    //    {
+    //        var color = ballScriptableObject.BallColor;
+    //        var ball = GameObject.Instantiate(_ball);
+    //        ball.SetColor(ballScriptableObject.BallColor);
+    //        ball.GetComponent<SpriteRenderer>().sprite = ballScriptableObject.Sprite;
+    //        ball.enabled = false;
+    //        _balls.Add(color, ball);
+    //    }
+    //}
 
-        foreach (BallScriptableObject ballScriptableObject in _ballConfigParameter.BallScriptableObjects)
-        {
-            var color = ballScriptableObject.BallColor;
-            var ball = GameObject.Instantiate(_ball);
-            ball.SetColor(ballScriptableObject.BallColor);
-            ball.GetComponent<SpriteRenderer>().sprite = ballScriptableObject.Sprite;
-            ball.enabled = false;
-            _balls.Add(color, ball);
-        }
-    }
-
-    public IBall Create(Vector3 position, BallColor color)
-    {
-        Ball newBall = GameObject.Instantiate(_balls[color], position, Quaternion.identity);
-        BallObserver.Instance.Register(newBall);
-        //newBall.enabled = true;
-        return newBall;
-    }
+    //public IBall Create(Vector3 position, BallColor color)
+    //{
+    //    IBall ball = _ballsLoader.Prefabs.Where(x => x.Color == color).FirstOrDefault();
+    //    IBall newBall = GameObject.Instantiate((Ball)ball, position, Quaternion.identity);
+    //    BallObserver.Instance.Register(newBall);
+    //    return newBall;
+    //}
 }

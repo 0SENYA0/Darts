@@ -25,8 +25,10 @@ public class Dart : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.TryGetComponent<Ball>(out Ball ball))
-            ball.Burst();
-
+        {
+            if (ball.CanExplode())
+                ball.Explode();
+        }
 
         if (collision.gameObject.TryGetComponent<Bomb>(out Bomb bomb))
             bomb.Detonate2();

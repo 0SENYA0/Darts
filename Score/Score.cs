@@ -1,27 +1,25 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 
 public class Score
 {
-    readonly private ScoreView _scoreView;
-    readonly private Dictionary<BallColor, int> _scoreDictionary = new Dictionary<BallColor, int>();
+    private readonly ScoreView _scoreView;
+    //private readonly BallsLoader _ballsInfoProvider;
 
-    public Score(ScoreView scoreView, BallsInfoProvider ballsInfoProvider)
+    public Score(ScoreView scoreView)
     {
         Count = 0;
         _scoreView = scoreView;
-        _scoreDictionary = ballsInfoProvider.BallScriptableObjects
-            .Select(info => new { Key = info.BallColor, Value = info.Score })
-            .Distinct()
-            .ToDictionary(item => item.Key, item => item.Value);
         BallObserver.Instance.BallDestroyed += OnBallDestroyed;
     }
+
+    ~Score() =>
+        BallObserver.Instance.BallDestroyed -= OnBallDestroyed;
 
     public int Count { get; private set; }
 
     private void OnBallDestroyed(IBall obj)
     {
-        int scoreToAdd = _scoreDictionary[obj.Color];
+        int scoreToAdd = BallsLoader.ScriptableObjects.Where(x => x.BallColor == obj.Color).Select(x => x.Score).FirstOrDefault();
         Count += scoreToAdd;
         _scoreView.SetNewValue(Count);
     }
